@@ -69,6 +69,8 @@ class Solution:
         m, n = len(s), len(p)
         # dp[i][j] 表示 s[:i] 与 p[:j] 是否匹配，各自前 i、j 个是否匹配
         dp = [[False for j in range(n + 1)] for i in range(m + 1)]
+        print("m:{}\tn:{}\trow(dp):{}\tcol(dp):{}".format(m, n, len(dp), len(dp[0])))
+
         dp[0][0] = True
 
         # s 为空串
@@ -78,6 +80,8 @@ class Solution:
             # 那么如果前 j - 2 个已经匹配上，前 j 个也可以匹配上
             if p[j - 1] == '*':
                 dp[0][j] = dp[0][j-2]
+            
+            print("j-1:{}\tp[{}]:{}\tdp[0][{}]:{}".format(j-1, j-1, p[j-1], j, dp[0][j]))
 
         for i in range(1, m+1):
             for j in range(1, n+1):
@@ -95,8 +99,8 @@ class Solution:
 if __name__ == '__main__':
     start = time.time()
     
-    s = "mississippi"
-    p = "mis*is*p*."
+    s = "aab"
+    p = "c*a*b"
     
     sim = Solution()
     result = sim.isMatch(s, p)

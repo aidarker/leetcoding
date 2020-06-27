@@ -38,7 +38,7 @@ class Solution(object):
 if __name__ == '__main__':
     start = time.time()
     
-    s = "IVIIX"
+    s = "MCMXCIV"
     srt = Solution()
     result = srt.romanToInt(s)
     print(result)
