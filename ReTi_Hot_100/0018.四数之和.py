@@ -34,35 +34,42 @@ class Solution(object):
         if(not nums or n<4):
             return res
         
-        nums.sort()
-        for i in range(n):
-            if(i>0 and nums[i]==nums[i-1]):
+        nums.sort() # 排序
+
+        for a in range(n-3):
+            if(a>0 and nums[a]==nums[a-1]):
                 continue
-            
-            L = i + 1
-            R = n - 1
-            while L < R:
-                if(nums[i] + nums[L] + nums[R] == 0):
-                    res.append([nums[i],nums[L],nums[R]])
-                    
-                    while(L<R and nums[L]==nums[L+1]):  L += 1 # 为了排除三个相等数据,超过原始该数据的个数
-                    while(L<R and nums[R]==nums[R-1]):  R -= 1 # 为了排除三个相等数据,超过原始该数据的个数
-                    L += 1
-                    R -= 1
-                elif(nums[i] + nums[L] + nums[R] > 0):
-                    R -= 1
-                else:
-                    L += 1
+            for b in range(a+1, n-2):
+                if (b>a+1 and nums[b]==nums[b-1]):
+                    continue
+                c = b+1
+                d = n-1
+                while c<d:
+                    sum = nums[a]+nums[b]+nums[c]+nums[d]
+                    if sum == target:
+                        res.append([nums[a],nums[b],nums[c],nums[d]])
+                        while c<d and nums[c]==nums[c+1]:
+                            c += 1
+                        while c<d and nums[d]==nums[d-1]:
+                            d -= 1
+                        c += 1
+                        d -= 1
+                    elif sum < target:
+                        c += 1
+                    else:
+                        d -= 1
+        
         return res
 
         
 if __name__ == '__main__':
     start = time.time()
     
-    nums = [1, 0, -1, 0, -2, 2]
+    nums = [-3,-2,-1,0,0,1,2,3]
     target = 0
     sfs = Solution()
-    sfs.fourSum(nums, target)
+    result = sfs.fourSum(nums, target)
+    print("result = {}".format(result))
     
     end = time.time()
     delta = end - start
