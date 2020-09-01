@@ -49,8 +49,6 @@ def dtw(A, B, d = lambda x,y: abs(x-y)):
 if __name__ == '__main__':
     start = time.time()
     
-    # X=[1,2,3,4]
-    # Y=[1,2,7,4,5]
     A=[1,1,1,2,10,3]
     B=[1,1,1,10,2,3]
     

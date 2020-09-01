@@ -6,7 +6,7 @@
 @Time    :   2020-06-24
 @Author  :   KouKai
 @Version :   V1.0
-@Remarks :   None
+@Remarks :   时间复杂度O(log(n))
 '''
 
 import sys
