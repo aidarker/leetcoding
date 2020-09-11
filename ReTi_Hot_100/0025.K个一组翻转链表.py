@@ -17,9 +17,6 @@ sys.path.append(path)
 
 import time
 import datetime
-import logging
-logging.basicConfig(level = logging.INFO,format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-logger = logging.getLogger(__name__)
 
 
 # Definition for singly-linked list.
@@ -28,39 +25,69 @@ class ListNode(object):
         self.val = x
         self.next = None
 
-class Solution(object):
+class Solution:
+    def reverse(self, head):
+        pre = None
+        curr = head
+        while curr:
+            nextNode = curr.next
+            curr.next = pre
+            pre = curr
+            curr = nextNode
+        return pre
+
     def reverseKGroup(self, head, k):
-        """
-        :type head: ListNode
-        :type k: int
-        :rtype: ListNode
-        """
-        if not head or not head.next: return head
-        
-        p = head
-        q = head.next
+        """ 首先判断是否为空的情况 """
+        if not head or not head.next:
+            return head
+
+        dummy = ListNode(0)
+        dummy.next = head
+        pre, end = dummy, dummy
+
+        while end.next:
+            # 取出待翻转的部分
+            i = 0
+            while i < k and end:
+                end = end.next
+                i += 1
+            if not end: break
+
+            # 断开链表
+            startNode = pre.next
+            nextNode = end.next
+            end.next = None
+            pre.next = self.reverse(startNode)  # 处理翻转
+            startNode.next = nextNode   # startNode 转到翻转这部分节点的最后了, 连接断开的链表
+            # 挪动以进行下一组处理
+            pre = startNode
+            end = pre
+        return dummy.next
 
 
+def create_listnode():
+    head = ListNode(1)
+    p = head
+
+    for i in range(2, 6):
+        q = ListNode(i)
+        p.next = q
+        p = q
+    return head
 
 
 if __name__ == '__main__':
     start = time.time()
     
-    head = ListNode(1)
-    p1 = ListNode(2)
-    p2 = ListNode(3)
-    p3 = ListNode(4)
-    p4 = ListNode(5)
-
-    head.next = p1
-    p1.next = p2
-    p2.next = p3
-    p3.next = p4
+    head = create_listnode()
 
     k = 2
     srskg = Solution()
-    srskg.reverseKGroup(head, k)
+    result = srskg.reverseKGroup(head, 2)
+    while result:
+        print(result.val)
+        result = result.next
         
     end = time.time()
     delta = end - start
-    logger.info("Finished time is {}".format(datetime.timedelta(seconds=delta)))
+    print("Finished time is {}".format(datetime.timedelta(seconds=delta)))

@@ -44,20 +44,21 @@ class Solution(object):
         q.next = p   # 交换了两个节点以后,返回secondNode,因为它是交换后的新头;在所有节点交换完成以后,我们返回交换后的头,实际上是原始链表的第二个节点.
         return q
 
+def create_listnode():
+    head = ListNode(1)
+    p = head
+
+    for i in range(2, 6):
+        q = ListNode(i)
+        p.next = q
+        p = q
+    return head
+
 
 if __name__ == '__main__':
     start = time.time()
     
-    head = ListNode(1)
-    p1 = ListNode(2)
-    p2 = ListNode(3)
-    p3 = ListNode(4)
-    p4 = ListNode(5)
-
-    head.next = p1
-    p1.next = p2
-    p2.next = p3
-    p3.next = p4
+    head = create_listnode()
 
     ssp = Solution()
     result = ssp.swapPairs(head)
