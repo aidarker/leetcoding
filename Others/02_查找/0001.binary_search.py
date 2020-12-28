@@ -28,20 +28,40 @@ def binary_search(arr, v):
     while(low<high):
         mid = (low + high) // 2
         mid_value = arr[mid]
-        if v == mid_value:
-            return mid
-        if mid_value > v:
+        if v < mid_value:
             high = mid
-        else:
+        elif v > mid_value:
             low = mid + 1
+        else:
+            return mid
     return -1
+
+
+def binary_search_1(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        mid_value = arr[mid]
+        if target < mid_value:
+            high = mid - 1
+        elif target > mid_value:
+            low = mid + 1
+        else:
+            return mid
+
+    return -1
+
 
 if __name__ == '__main__':
     start = time.time()
     
     print(binary_search([1,2,3], 1))
     print(binary_search([1,1,2,3,4], 1))
-    print(binary_search([1,2,3,4,6,7,8], 5))
+    print(binary_search([1,2,3,4,6,7,8], 3))
+    print(30*"==")
+    print(binary_search_1([1,2,3], 1))
+    print(binary_search_1([1,1,2,3,4], 1))
+    print(binary_search_1([1,2,3,4,6,7,8], 3))
     
     end = time.time()
     delta = end - start
